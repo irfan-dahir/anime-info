@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Popup</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/popup.css">
+</head>
+<body>
+
+	<div id="overlay_loading">
+		<img src="assets/svg/loading.svg">
+	</div>
+
+	<div id="notif" class="notif">
+	</div>
+
+	<form id="search_form" class="search" onsubmit="return false">
+		<input id="search_input" type="text" name="Search" placeholder="e.g 'Naruto'">
+		<button id="search_button"><img src="assets/svg/search.svg"></button>
+	</form>
+
+
+	<div class="anime">
+		<div class="row-1">
+			<div class="col-left">
+				<h1></h1>
+				<div class="genre">
+				</div>
+				<div class="source">Source: <span></span></div>
+				<div class="studio">Studio(s): <span></span></div>
+
+
+				<h2>Synopsis</h2>
+				<p></p>
+			</div>
+
+			<div class="col-right">
+				<img class="img" src="" alt="">
+
+				<div class="row-1-1">
+					<div class="score"></div>
+
+					<div class="rank"></div>
+				</div>
+
+				<div class="episodes">
+					<span></span> episode(s)
+				</div>
+
+				<div class="rating"></div>
+			</div>
+		</div>
+
+		<div class="row-2">
+
+		</div>
+	</div>
+
+</body>
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/search.js"></script>
+</html>

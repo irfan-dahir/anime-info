@@ -1,0 +1,180 @@
+* {
+	outline: none;
+}
+
+body {
+	background: #1E439B;
+	min-width: 400px;
+	position: relative;
+
+	display: grid;
+	justify-content: stretch;
+	margin: 0;
+	padding: 2em;
+
+	transition: background 0.5s ease;
+}
+
+body.bodySearchBackground {
+	background: #fff;
+}
+
+button {
+	cursor: pointer;
+	background: #1E439B;
+	border: none;
+}
+
+button > img {
+	height: 20px;
+	width: 20px;
+}
+
+.search {
+	display: grid;
+	grid-template-columns: 80% 20%;
+	overflow: hidden;
+	border-radius: 3px;
+	box-shadow: 0 0 50px 5px rgba(0,0,0,0.35);
+	margin: 2em 1em;
+
+	position: relative;
+}
+
+.search > input[type=text] {
+	background: #fff;
+	border: none;
+	padding: 1em 0.5em;
+	width: 100%;
+}
+
+.notif {
+	width: 100%;
+	background: #fff;
+	display: block;
+}
+
+
+#overlay_loading {
+	position: absolute;
+	height: 100%; width: 100%;
+	background: rgba(0,0,0,.6);
+	display: block;
+	z-index: 9999;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.anime {
+	display: none;
+	opacity: 0;
+
+	grid-template-rows: 2;
+
+	transition: opacity 0.5s ease 0.5s;
+}
+
+.anime .row-1 {
+	display: grid;
+	grid-template-columns: 60% 40%;
+}
+
+
+.anime .col-right {
+    display: flex;
+    flex-direction: start;
+    flex-direction: column;
+}
+
+.anime .row-1-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    height: 40px;
+    margin: 1px 0;
+    grid-column-gap: 1px;
+}
+
+.anime .score,
+.anime .rank {
+    font-size: 1rem;
+    color: #fff;
+    background: #1E439B;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.anime h1 {
+	font-size: 2em;
+	line-height: 1;
+	margin: 0;
+	color: rgba(0,0,0,.8);
+}
+
+.anime h2 {
+	color: rgba(0,0,0,.8);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    margin-top: 2em;
+}
+
+.anime p {
+    line-height: 1.5;
+    font-size: .7rem;
+    padding-right: 1em;
+    text-align: justify;
+    margin: 0;
+    color: rgba(0,0,0,.8);
+}
+
+.anime .genre {
+    padding: 0.25em 0 1em 0;
+}
+
+.anime .genre > label {
+    padding: 0.25em;
+    background: #1E439B;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: .7rem;
+    margin: 0.05em;
+    display: inline-block;
+}
+
+.anime .img {
+	height: 238px;
+	width: 100%;
+	object-fit: cover;
+}
+
+
+
+.anime .source,
+.anime .studio {
+	margin-bottom: 0.5em;
+}
+
+.anime .episodes {
+    background: #1E439B;
+    height: 30px;
+    font-size: 1rem;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.anime .rating {
+    color: rgba(0,0,0,.6);
+    font-size: .6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+}
+
+.anime.fadeIn {
+	opacity: 1;
+}
