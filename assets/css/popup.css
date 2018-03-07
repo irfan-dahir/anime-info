@@ -2,6 +2,11 @@
 	outline: none;
 }
 
+a {
+	color: #1E439B;
+	text-decoration: none;
+}
+
 body {
 	background: #1E439B;
 	min-width: 400px;
