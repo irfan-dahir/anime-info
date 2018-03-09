@@ -1,7 +1,6 @@
 # Anime Info
 Quickly fetch anime information from MyAnimeList using [Jikan.me](https://jikan.me)
 
-Supported Browser(s): Opera
 
 Web technologies used:
 - Normalize.css
