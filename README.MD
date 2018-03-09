@@ -13,6 +13,14 @@ Web technologies used:
 Playing around with browser extensions. This project is a WIP.
 
 
+## Changelog
+### alpha 0.2.0
+- added search functionality
+
+### alpha 0.1.0
+- added `anime:<id>` for directly fetching an anime with their MAL ID
+
+
 
 ## Attributions
 
