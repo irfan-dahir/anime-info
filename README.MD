@@ -9,6 +9,10 @@ Web technologies used:
 - CSS FlexBox & Grid
 
 
+## Supported Browsers
+![Opera](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/opera/opera_48x48.png)
+
+
 
 Playing around with browser extensions. This project is a WIP.
 
