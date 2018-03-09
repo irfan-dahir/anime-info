@@ -13,15 +13,6 @@ Web technologies used:
 Playing around with browser extensions. This project is a WIP.
 
 
-## Changelog
-### alpha 0.2.0
-- added search functionality
-
-### alpha 0.1.0
-- added `anime:<id>` for directly fetching an anime with their MAL ID
-
-
-
 ## Attributions
 
 - Search Icon (search.svg) made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
