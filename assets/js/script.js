@@ -22,14 +22,14 @@ $(function() {
 					//let data = JSON.parse(json);
 					console.log(data);
 					$("#overlay_loading").hide();
-					$("body").addClass('bodySearchBackground');
+					//$("body").addClass('bodySearchBackground');
 					$("#search_form").hide();
 
 					$(".anime").show();
 					$(".anime").css('display', 'grid');
 
 					$(".anime h1").text(data.title);
-					$(".anime .source").text("Source: " + data.source);
+					$(".anime .source span").text(data.source);
 					$(".anime .score span").text(data.score);
 					$(".anime .rank span").text(data.rank);
 					$(".anime .episodes span").text(data.episodes);
@@ -60,7 +60,7 @@ $(function() {
 					//let data = JSON.parse(json);
 					console.log(data);
 					$("#overlay_loading").hide();
-					$("body").addClass('bodySearchBackground');
+					//$("body").addClass('bodySearchBackground');
 					$("#search_form").hide();
 
 					$(".search_results").show();
@@ -91,14 +91,14 @@ $(function() {
 			success: function(data) {
 				//let data = JSON.parse(json);
 				$("#overlay_loading").hide();
-				$("body").addClass('bodySearchBackground');
+				//$("body").addClass('bodySearchBackground');
 				$("#search_form").hide();
 
 				$(".anime").show();
 				$(".anime").css('display', 'grid');
 
 				$(".anime h1").text(data.title);
-				$(".anime .source").text("Source: " + data.source);
+				$(".anime .source span").text(data.source);
 				$(".anime .score").text(data.score);
 				$(".anime .rank").text("#"+data.rank);
 				$(".anime .episodes span").text(data.episodes);
