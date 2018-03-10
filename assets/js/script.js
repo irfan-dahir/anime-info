@@ -1,18 +1,43 @@
 $(function() {
 
+
+/*
+ * On Load
+ */
+
 	$("#search_input").focus();
 
 	var recent = recentGet();
 	if (recent !== null && recent.length > 0) {
 		recent = recent.reverse();
 		for(k in recent) {
-			$('.recent_wrap').append('<div class="recent"><label class="query">'+recent[k]+'</label><i class="recent_delete"><svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg></i></div>')
+			console.log(k*250);
+			$('.recent_wrap').append('<div class="recent"><label class="query">'+recent[k]+'</label><i data-it="'+k+'" class="recent_delete"><svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg></i></div>');
 		}
 	} else {
 		$('.recent_search').hide();
 	}
 	
+/*
+ * Functions
+ */
+
 	function notif(text) {$("#notif").show(); $("#notif").empty(); $("#notif").html(text); }
+
+	function recentRemove(query) {
+		let recent = JSON.parse(localStorage.getItem('recent'));
+		var i = recent.indexOf(query);
+		if (i != -1) {
+			recent.splice(i, 1);
+		}
+
+		localStorage.setItem('recent', JSON.stringify(recent));
+	}
+
+	function recentRemoveAll() {
+		let recent = [];
+		localStorage.setItem('recent', JSON.stringify(recent));
+	}
 
 	function recentAdd(query) {
 		if (typeof localStorage.getItem('recent') !== 'undefined' && localStorage.getItem('recent') !== null) {
@@ -32,16 +57,30 @@ $(function() {
 		} return [];
 	}
 
+
+/*
+ * Events
+ */
+
+ 	// Clear Recent Item
 	$(document).on('click', ".recent_delete", function() {
-		$(this).addClass('clear');
+		recentRemove($(this).parent().find(".query").text());
+		$(this).parent().addClass('clear');
+		$(this).parent().fadeOut().delay(500);
+		setTimeout(function(){
+			$(this).parent().remove();
+		}, 1000);
 	});
 
+	// Clear Recent All
 	$(document).on('click', "#clear_recent", function() {
 		$('.recent_wrap > .recent').each(function(i, item) {
 			$(this).addClass('clear');
 		});
+		recentRemoveAll();
 	});
 
+	// Search Submit
 	$("#search_form").on('submit', function(e) {
 		e.preventDefault();
 
@@ -136,9 +175,8 @@ $(function() {
 	});
 
 
+	// Select Recent Item
 	$(".recent > .query").on('click', function() {
-
-
 		$(".search_results").empty();
 		$(".search_results").hide();
 		$(".recent_search").hide();
@@ -222,6 +260,7 @@ $(function() {
 		}
 	});
 
+	// Select Search Item
 	$(document).on('click', '.cta_more', function() {
 		var id = $(this).attr('data-id');
 
@@ -261,6 +300,7 @@ $(function() {
 		});
 	});
 
+	// Input Focus Style
 	$("#search_input").focus(function(){
 		$("#search_form").addClass('focus');
 	}).blur(function(){
