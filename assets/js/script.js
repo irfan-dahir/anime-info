@@ -80,6 +80,12 @@ $(function() {
 		recentRemoveAll();
 	});
 
+	$(".anime .anime_cta").on('click', function() {
+		chrome.tabs.create({
+			'url': $(this).attr('data-url')
+		});
+	});
+
 	// Search Submit
 	$("#search_form").on('submit', function(e) {
 		e.preventDefault();
@@ -117,6 +123,10 @@ $(function() {
 
 					$(".anime h1").text(data.title);
 					$(".anime .source span").text(data.source);
+					$(".anime .aired span").text(data.aired_string);
+					$(".anime .type span").text(data.type);
+					$(".anime .premiered span").text(data.premiered);
+					$(".anime .broadcast span").text(data.broadcast);
 					$(".anime .score span").text(data.score);
 					$(".anime .rank span").text(data.rank);
 					$(".anime .episodes span").text(data.episodes);
@@ -125,6 +135,9 @@ $(function() {
 					$(".anime .img").attr("alt", data.title);
 					$(".anime p").html(data.synopsis).text();
 
+					$('.anime .anime_cta').attr('data-url', 'https://myanimelist.net/anime/'+data.mal_id);
+
+
 					for(k in data.genre) {
 						$(".anime .genre").append("<label>"+data.genre[k].name+"</label>")
 					}
@@ -132,6 +145,8 @@ $(function() {
 					for(k in data.studio) {
 						$(".anime .studio span").append("<a href=\""+data.studio[k].url+"\">"+data.studio[k].name+"</a>")
 					}
+
+					if (data.airing) {$(".anime .badge.airing").css('display', 'flex'); }
 
 					$(".anime").addClass('fadeIn');
 				}
@@ -203,6 +218,10 @@ $(function() {
 
 					$(".anime h1").text(data.title);
 					$(".anime .source span").text(data.source);
+					$(".anime .aired span").text(data.aired_string);
+					$(".anime .type span").text(data.type);
+					$(".anime .premiered span").text(data.premiered);
+					$(".anime .broadcast span").text(data.broadcast);
 					$(".anime .score span").text(data.score);
 					$(".anime .rank span").text(data.rank);
 					$(".anime .episodes span").text(data.episodes);
@@ -211,6 +230,8 @@ $(function() {
 					$(".anime .img").attr("alt", data.title);
 					$(".anime p").html(data.synopsis).text();
 
+					$('.anime .anime_cta').attr('data-url', 'https://myanimelist.net/anime/'+data.mal_id);
+
 					for(k in data.genre) {
 						$(".anime .genre").append("<label>"+data.genre[k].name+"</label>")
 					}
@@ -218,6 +239,8 @@ $(function() {
 					for(k in data.studio) {
 						$(".anime .studio span").append("<a href=\""+data.studio[k].url+"\">"+data.studio[k].name+"</a>")
 					}
+
+					if (data.airing) {$(".anime .badge.airing").css('display', 'flex'); }
 
 					$(".anime").addClass('fadeIn');
 				}
@@ -279,6 +302,10 @@ $(function() {
 
 				$(".anime h1").text(data.title);
 				$(".anime .source span").text(data.source);
+				$(".anime .aired span").text(data.aired_string);
+				$(".anime .type span").text(data.type);
+				$(".anime .premiered span").text(data.premiered);
+				$(".anime .broadcast span").text(data.broadcast);
 				$(".anime .score").text(data.score);
 				$(".anime .rank").text("#"+data.rank);
 				$(".anime .episodes span").text(data.episodes);
@@ -287,6 +314,8 @@ $(function() {
 				$(".anime .img").attr("alt", data.title);
 				$(".anime p").html(data.synopsis).text();
 
+				$('.anime .anime_cta').attr('data-url', 'https://myanimelist.net/anime/'+data.mal_id);
+
 				for(k in data.genre) {
 					$(".anime .genre").append("<label>"+data.genre[k].name+"</label>")
 				}
@@ -294,6 +323,8 @@ $(function() {
 				for(k in data.studio) {
 					$(".anime .studio span").append("<a href=\""+data.studio[k].url+"\">"+data.studio[k].name+"</a>")
 				}
+	
+				if (data.airing) {$(".anime .badge.airing").css('display', 'flex'); }
 	
 				$(".anime").addClass('fadeIn');
 			}

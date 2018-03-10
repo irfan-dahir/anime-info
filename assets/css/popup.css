@@ -193,7 +193,27 @@ button > img {
     display: flex;
     flex-direction: start;
     flex-direction: column;
+    position: relative;
 }
+	.anime .badge {
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    background: #fff;
+	    height: 20px;
+	    margin: 0.25em;
+	    min-width: 50px;
+	    font-size: .7rem;
+	    display: none;
+	    justify-content: center;
+	    align-items: center;
+	    text-transform: uppercase;
+	    cursor: default;
+	}
+		.anime .badge.airing {
+			background: var(--accent-color);
+			color: var(--glyphs);
+		}
 
 .anime .row-1-1 {
     display: grid;
@@ -270,12 +290,20 @@ button > img {
 
 
 .anime .source,
+.anime .aired,
+.anime .type,
+.anime .premiered,
+.anime .broadcast,
 .anime .studio {
 	margin-bottom: 0.5em;
 	color: var(--primary-text);
 }
 
 .anime .source > span,
+.anime .aired > span,
+.anime .type > span,
+.anime .premiered > span,
+.anime .broadcast > span,
 .anime .studio > span {
 	color: var(--secondary-text);
 	font-weight: bold;
@@ -302,6 +330,24 @@ button > img {
     justify-content: center;
     align-items: center;
     height: 20px;
+}
+
+.anime .anime_cta {
+    display: flex;
+    background: var(--accent-color);
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    justify-self: flex-end;
+    align-self: flex-end;
+    justify-content: a;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+	box-shadow: 2px 3px 3px 0px rgba(41, 41, 41, .3);
 }
 
 .anime.fadeIn {
