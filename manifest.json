@@ -3,7 +3,7 @@
 
 	"name": "Anime Info",
 	"description": "Fetch Anime information from MyAnimeList",
-	"version": "1.0",
+	"version": "1.0.1",
 	"developer": {
 		"name": "Irfan",
 		"url": "http://irfan.dahir.co"
@@ -14,10 +14,14 @@
 		"48": "icon_48.png",
 		"128": "icon_128.png"
 	},
-	"permissions": ["tabs"],
+	"permissions": [
+		"tabs",
+		"https://myanimelist.net/",
+		"https://*.jikan.me/",
+		"https://api.jikan.me/"
+	],
 	"browser_action": {
-		//"default_icon": "icon.png",
-		"default_title": "Lookup any Anime",
+		"default_title": "Search for an Anime",
 		"default_popup": "popup.html"
 	}
 }
