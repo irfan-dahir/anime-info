@@ -1,5 +1,6 @@
 $(function() {
 
+	$("#search_input").focus();
 
 	var recent = recentGet();
 	if (recent !== null && recent.length > 0) {
@@ -46,8 +47,8 @@ $(function() {
 
 		var text = $("#search_input").val();
 
-		if (text.length < 4) {
-			notif("Search query must be more than <b>3 letters</b>!");
+		if (text.length < 3) {
+			notif("Search query must consist more than <b>2 letters</b>!");
 			return;
 		}
 
