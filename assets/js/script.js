@@ -1,13 +1,64 @@
 $(function() {
+
+
+	var recent = recentGet();
+	if (recent !== null && recent.length > 0) {
+		recent = recent.reverse();
+		for(k in recent) {
+			$('.recent_wrap').append('<div class="recent"><label class="query">'+recent[k]+'</label><i class="recent_delete"><svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg></i></div>')
+		}
+	} else {
+		$('.recent_search').hide();
+	}
+	
+	function notif(text) {$("#notif").show(); $("#notif").empty(); $("#notif").html(text); }
+
+	function recentAdd(query) {
+		if (typeof localStorage.getItem('recent') !== 'undefined' && localStorage.getItem('recent') !== null) {
+			var recent = JSON.parse(localStorage.getItem('recent'));
+			if (recent[recent.length-1] != query) {
+				if (recent.length >= 5) {recent.pop();} // delete last one
+			} else {return;}
+		} else { var recent = []; }
+
+		recent.push(query);
+		localStorage.setItem('recent', JSON.stringify(recent));
+	}
+
+	function recentGet() {
+		if (typeof localStorage.getItem('recent') !== 'undefined' && localStorage.getItem('recent') !== null) {
+			return JSON.parse(localStorage.getItem('recent'));
+		} return [];
+	}
+
+	$(document).on('click', ".recent_delete", function() {
+		$(this).addClass('clear');
+	});
+
+	$(document).on('click', "#clear_recent", function() {
+		$('.recent_wrap > .recent').each(function(i, item) {
+			$(this).addClass('clear');
+		});
+	});
+
 	$("#search_form").on('submit', function(e) {
 		e.preventDefault();
 
 		var text = $("#search_input").val();
 
-		if (text.length == 0) {
-			$("#notif").text("Empty")
+		if (text.length < 4) {
+			notif("Search query must be more than <b>3 letters</b>!");
 			return;
 		}
+
+		recentAdd(text);
+		$("#search_input").val(text);
+
+		$(".search_results").empty();
+		$(".search_results").hide();
+		$(".recent_search").hide();
+		$(".anime").hide();
+
 
 		if (/anime:(\s|)([0-9]{1,})/.test(text)) {
 			var matches = text.match(/anime:(\s|)([0-9]{1,})/);
@@ -19,11 +70,7 @@ $(function() {
 			$.ajax({
 				url: 'https://api.jikan.me/anime/'+id,
 				success: function(data) {
-					//let data = JSON.parse(json);
-					console.log(data);
 					$("#overlay_loading").hide();
-					//$("body").addClass('bodySearchBackground');
-					$("#search_form").hide();
 
 					$(".anime").show();
 					$(".anime").css('display', 'grid');
@@ -57,28 +104,124 @@ $(function() {
 			$.ajax({
 				url: 'https://api.jikan.me/search/anime/'+query,
 				success: function(data) {
-					//let data = JSON.parse(json);
-					console.log(data);
+					if ('error' in data) {
+						$("#overlay_loading").hide();
+						if (data.error == "File does not exist") {
+							notif("Anime does not exist!");
+							return;
+						}
+						
+						notif("Unknown error. Try again later.");
+						return;
+					}
+
+					if (data.result === undefined || data.result.length == 0) {
+						notif("No results for \""+query+"\"");
+						return;
+					}
+
 					$("#overlay_loading").hide();
-					//$("body").addClass('bodySearchBackground');
-					$("#search_form").hide();
 
 					$(".search_results").show();
 
 					for(k in data.result) {
-						$(".search_results").append('<div class="result"> <div class="col-left"> <img src="'+data.result[k].image_url+'" alt="'+data.result[k].title+'"> <div class="info"> <div class="score">'+data.result[k].score+'</div> <div class="episodes">'+data.result[k].episodes+' ep(s)</div> </div> </div> <div class="col-right"> <h1>'+data.result[k].title+'</h1> <p>'+data.result[k].description+'</p> <button data-id="'+data.result[k].id+'" class="results_read_more">More</div> </div> </div>');
+						$(".search_results").append('<div class="result"> <img src="'+data.result[k].image_url+'" alt="'+data.result[k].title+'"> <div class="info"> <label> <i class="icon"> <svg height="18" viewBox="0 0 18 18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M9 11.3l3.71 2.7-1.42-4.36L15 7h-4.55L9 2.5 7.55 7H3l3.71 2.64L5.29 14z"/><path d="M0 0h18v18H0z" fill="none"/></svg> </i> <span>'+data.result[k].score+'</span></label> <label> <i class="icon"><svg height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg></i> <span>'+data.result[k].episodes+'</span></label> </div> <div class="synopsis"> <p>'+data.result[k].description+'</p> </div> <button class="cta_more" data-id="'+data.result[k].id+'"><svg height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/><path d="M0-.25h24v24H0z" fill="none"/></svg></button> </div>');
 					}
 
 					$(".search_results").addClass('fadeIn');
 				}
 			});
 		}
-
 	});
 
 
+	$(".recent > .query").on('click', function() {
 
-	$(document).on('click', '.results_read_more', function() {
+
+		$(".search_results").empty();
+		$(".search_results").hide();
+		$(".recent_search").hide();
+		$(".anime").hide();
+
+		var text = $(this).text();
+		recentAdd(text);
+		$("#search_input").val(text);
+
+		if (/anime:(\s|)([0-9]{1,})/.test(text)) {
+			var matches = text.match(/anime:(\s|)([0-9]{1,})/);
+			var id = matches[2];
+
+			$("#overlay_loading").show();
+			$("#overlay_loading").css('display', 'grid');
+
+			$.ajax({
+				url: 'https://api.jikan.me/anime/'+id,
+				success: function(data) {
+					$("#overlay_loading").hide();
+
+					$(".anime").show();
+					$(".anime").css('display', 'grid');
+
+					$(".anime h1").text(data.title);
+					$(".anime .source span").text(data.source);
+					$(".anime .score span").text(data.score);
+					$(".anime .rank span").text(data.rank);
+					$(".anime .episodes span").text(data.episodes);
+					$(".anime .rating").text(data.rating);
+					$(".anime .img").attr("src", data.image_url);
+					$(".anime .img").attr("alt", data.title);
+					$(".anime p").html(data.synopsis).text();
+
+					for(k in data.genre) {
+						$(".anime .genre").append("<label>"+data.genre[k].name+"</label>")
+					}
+
+					for(k in data.studio) {
+						$(".anime .studio span").append("<a href=\""+data.studio[k].url+"\">"+data.studio[k].name+"</a>")
+					}
+
+					$(".anime").addClass('fadeIn');
+				}
+			});
+		} else {
+			$("#overlay_loading").show();
+			$("#overlay_loading").css('display', 'grid');
+			var query = encodeURI(text);
+
+			$.ajax({
+				url: 'https://api.jikan.me/search/anime/'+query,
+				success: function(data) {
+					if ('error' in data) {
+						$("#overlay_loading").hide();
+						if (data.error == "File does not exist") {
+							notif("Anime does not exist!");
+							return;
+						}
+						
+						notif("Unknown error. Try again later.");
+						return;
+					}
+
+					if (data.result === undefined || data.result.length == 0) {
+						notif("No results for \""+query+"\"");
+						return;
+					}
+
+					$("#overlay_loading").hide();
+
+					$(".search_results").show();
+
+					for(k in data.result) {
+						$(".search_results").append('<div class="result"> <img src="'+data.result[k].image_url+'" alt="'+data.result[k].title+'"> <div class="info"> <label> <i class="icon"> <svg height="18" viewBox="0 0 18 18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M9 11.3l3.71 2.7-1.42-4.36L15 7h-4.55L9 2.5 7.55 7H3l3.71 2.64L5.29 14z"/><path d="M0 0h18v18H0z" fill="none"/></svg> </i> <span>'+data.result[k].score+'</span></label> <label> <i class="icon"><svg height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg></i> <span>'+data.result[k].episodes+'</span></label> </div> <div class="synopsis"> <p>'+data.result[k].description+'</p> </div> <button class="cta_more" data-id="'+data.result[k].id+'"><svg height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/><path d="M0-.25h24v24H0z" fill="none"/></svg></button> </div>');
+					}
+
+					$(".search_results").addClass('fadeIn');
+				}
+			});
+		}
+	});
+
+	$(document).on('click', '.cta_more', function() {
 		var id = $(this).attr('data-id');
 
 		$(".search_results").fadeOut();
@@ -89,10 +232,7 @@ $(function() {
 		$.ajax({
 			url: 'https://api.jikan.me/anime/'+id,
 			success: function(data) {
-				//let data = JSON.parse(json);
 				$("#overlay_loading").hide();
-				//$("body").addClass('bodySearchBackground');
-				$("#search_form").hide();
 
 				$(".anime").show();
 				$(".anime").css('display', 'grid');
@@ -118,6 +258,12 @@ $(function() {
 				$(".anime").addClass('fadeIn');
 			}
 		});
-
 	});
+
+	$("#search_input").focus(function(){
+		$("#search_form").addClass('focus');
+	}).blur(function(){
+		$("#search_form").removeClass('focus');
+	});
+
 });
