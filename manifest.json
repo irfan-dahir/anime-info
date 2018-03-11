@@ -4,10 +4,6 @@
 	"name": "Anime Info",
 	"description": "Fetch Anime information from MyAnimeList",
 	"version": "1.0.1",
-	"developer": {
-		"name": "Irfan",
-		"url": "http://irfan.dahir.co"
-	},
 	"homepage_url": "https://jikan.me",
 	"icons": {
 		"16": "icon_16.png",
