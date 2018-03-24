@@ -9,7 +9,7 @@ Web technologies used:
 
 
 ## Supported Browsers
-![Opera](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/opera/opera_48x48.png)
+![Opera](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.3.0/opera/opera_48x48.png) ![Firefox](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.4.0/firefox/firefox_48x48.png) ![Chrome](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/45.4.0/chrome/chrome_48x48.png)
 
 
 
