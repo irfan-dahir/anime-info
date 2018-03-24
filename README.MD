@@ -13,7 +13,7 @@ Web technologies used:
 
 
 
-Playing around with browser extensions. This project is a WIP.
+Playing around with browser extensions. I'm pretty much done with this project.
 
 
 ## Attributions
